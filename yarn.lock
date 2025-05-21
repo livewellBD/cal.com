@@ -4060,6 +4060,7 @@ __metadata:
     "@sentry/nextjs": ^9.15.0
     "@stripe/react-stripe-js": ^1.10.0
     "@stripe/stripe-js": ^1.35.0
+    "@supabase/supabase-js": ^2.49.6
     "@tanstack/react-query": ^5.17.15
     "@testing-library/react": ^13.3.0
     "@tremor/react": ^2.11.0
@@ -16591,6 +16592,77 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@supabase/auth-js@npm:2.69.1":
+  version: 2.69.1
+  resolution: "@supabase/auth-js@npm:2.69.1"
+  dependencies:
+    "@supabase/node-fetch": ^2.6.14
+  checksum: fe5e6bc8d63f2b3754077aff87265aaa8de7620c1a6951affda1e75efee2a549fa1003394b4d950aa976e016e5a032517475e51cc0a0edfbb965fd4c5280e592
+  languageName: node
+  linkType: hard
+
+"@supabase/functions-js@npm:2.4.4":
+  version: 2.4.4
+  resolution: "@supabase/functions-js@npm:2.4.4"
+  dependencies:
+    "@supabase/node-fetch": ^2.6.14
+  checksum: cbddd6c0f03de1d3ff1c9b760c028f9101b0221a2dc032000debd1734c725fe0217d56c281437cf71ff30e23a094b47275511b598ef68a39a66b967664faf7cb
+  languageName: node
+  linkType: hard
+
+"@supabase/node-fetch@npm:2.6.15, @supabase/node-fetch@npm:^2.6.14":
+  version: 2.6.15
+  resolution: "@supabase/node-fetch@npm:2.6.15"
+  dependencies:
+    whatwg-url: ^5.0.0
+  checksum: 9673b49236a56df49eb7ea5cb789cf4e8b1393069b84b4964ac052995e318a34872f428726d128f232139e17c3375a531e45e99edd3e96a25cce60d914b53879
+  languageName: node
+  linkType: hard
+
+"@supabase/postgrest-js@npm:1.19.4":
+  version: 1.19.4
+  resolution: "@supabase/postgrest-js@npm:1.19.4"
+  dependencies:
+    "@supabase/node-fetch": ^2.6.14
+  checksum: 3265d5d563eb4b54ab78f2d7a87c68948b323f520913e8309f367cbb8a714b8d5a519e05d73e96510f8d216ea55b5c21e1822f200f6db0a52cc028ac396f62cf
+  languageName: node
+  linkType: hard
+
+"@supabase/realtime-js@npm:2.11.8":
+  version: 2.11.8
+  resolution: "@supabase/realtime-js@npm:2.11.8"
+  dependencies:
+    "@supabase/node-fetch": ^2.6.14
+    "@types/phoenix": ^1.6.6
+    "@types/ws": ^8.5.14
+    ws: ^8.18.0
+  checksum: 9f5905289dae2724e0ee9c49273b2ffca40a89185104aa99ecd7ce6b06f5f5342f81f2b8a3addc9f92e23bf4b5968d83eedbc68324240abca3c7f7217fe10954
+  languageName: node
+  linkType: hard
+
+"@supabase/storage-js@npm:2.7.1":
+  version: 2.7.1
+  resolution: "@supabase/storage-js@npm:2.7.1"
+  dependencies:
+    "@supabase/node-fetch": ^2.6.14
+  checksum: ed8f3a3178856c331b36588f4fff5cbb7f2f89977fff9716ab20b1977d13816bda5a887a316638f2a05ac35fdef46e18eab8a543d6113de76d3a06b15bf9ae8e
+  languageName: node
+  linkType: hard
+
+"@supabase/supabase-js@npm:^2.49.6":
+  version: 2.49.6
+  resolution: "@supabase/supabase-js@npm:2.49.6"
+  dependencies:
+    "@supabase/auth-js": 2.69.1
+    "@supabase/functions-js": 2.4.4
+    "@supabase/node-fetch": 2.6.15
+    "@supabase/postgrest-js": 1.19.4
+    "@supabase/realtime-js": 2.11.8
+    "@supabase/storage-js": 2.7.1
+  checksum: 06c3d1fc0bd259ad498e3522ea95d033f575389beae11d9c584d1621dc5fac651ed8f3b79e71815ce0ee4f07f5021b666ace2a91345e1c659093f9aaa2e5dffb
+  languageName: node
+  linkType: hard
+
 "@swc/core-darwin-arm64@npm:1.5.28":
   version: 1.5.28
   resolution: "@swc/core-darwin-arm64@npm:1.5.28"
@@ -17817,6 +17889,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/jsonwebtoken@npm:^9.0.9":
+  version: 9.0.9
+  resolution: "@types/jsonwebtoken@npm:9.0.9"
+  dependencies:
+    "@types/ms": "*"
+    "@types/node": "*"
+  checksum: 9d564fc09fc83f66e319754dee0b039ae23f28fc38a9227c35283e69311ddf5a7493a060c7f956df8cd856416747c515b51fec20b8656865eacebf23b3c6bc62
+  languageName: node
+  linkType: hard
+
 "@types/keygrip@npm:*":
   version: 1.0.6
   resolution: "@types/keygrip@npm:1.0.6"
@@ -18157,6 +18239,13 @@ __metadata:
     pg-protocol: "*"
     pg-types: ^4.0.1
   checksum: 2b7cab5521d86357c615d36206108dea0be9193b5175edb0b0a4d19eb6c8f2e1542aa19276d1e78a0dfb337227f3aa0cf286e1db4beb7ad926d4bc73d06e2ca0
+  languageName: node
+  linkType: hard
+
+"@types/phoenix@npm:^1.6.6":
+  version: 1.6.6
+  resolution: "@types/phoenix@npm:1.6.6"
+  checksum: 9dc897cb9a4cd62f7a0de48855e6cafded5c676e7d78c4d3a9ade4f21ec82b95eb7195caada26a9a3a5d9aba14f0fd875bc3898e086234b20da63991a033f6e8
   languageName: node
   linkType: hard
 
@@ -18523,7 +18612,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/ws@npm:^8.0.0":
+"@types/ws@npm:^8.0.0, @types/ws@npm:^8.5.14":
   version: 8.18.1
   resolution: "@types/ws@npm:8.18.1"
   dependencies:
@@ -21822,6 +21911,7 @@ __metadata:
     "@snaplet/copycat": ^4.1.0
     "@testing-library/jest-dom": ^5.16.5
     "@testing-library/react": ^16.0.1
+    "@types/jsonwebtoken": ^9.0.9
     "@vercel/functions": ^1.4.0
     "@vitest/ui": ^2.1.1
     c8: ^7.13.0
@@ -21833,6 +21923,7 @@ __metadata:
     i18n-unused: ^0.13.0
     jest-diff: ^29.5.0
     jest-summarizing-reporter: ^1.1.4
+    jsonwebtoken: ^9.0.2
     lint-staged: ^12.5.0
     mailhog: ^4.16.0
     next-router-mock: ^0.9.12
@@ -32710,7 +32801,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jsonwebtoken@npm:9.0.2, jsonwebtoken@npm:^9.0.0":
+"jsonwebtoken@npm:9.0.2, jsonwebtoken@npm:^9.0.0, jsonwebtoken@npm:^9.0.2":
   version: 9.0.2
   resolution: "jsonwebtoken@npm:9.0.2"
   dependencies:
