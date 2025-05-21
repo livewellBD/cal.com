@@ -29,7 +29,19 @@ async function handler(req: NextApiRequestWithUser, res: NextApiResponse) {
       include: {
         schedules: {
           include: {
-            availability: true,
+            availability: {
+              select: {
+                id: true,
+                days: true,
+                startTime: true,
+                endTime: true,
+                userId: true, // Add any other scalar fields from the Availability model that you need
+                scheduleId: true,
+                date: true,
+                // Do NOT include other relations here with 'true' if they exist,
+                // be specific or omit if not needed.
+              },
+            },
           },
         },
       },
