@@ -26,7 +26,7 @@ generator kysely {
 }
 
 generator enums {
-  provider = "ts-node --transpile-only ./packages/prisma/enum-generator.ts" // Assuming it's in packages/prisma
+  provider = "ts-node --transpile-only ./enum-generator"
 }
 
 enum SchedulingType {
@@ -283,7 +283,7 @@ model TravelSchedule {
 
 // It holds Personal Profiles of a User plus it has email, password and other core things..
 model User {
-  id                  Int                @id @default(autoincrement())
+  id                  Int                  @id @default(autoincrement())
   username            String?
   name                String?
   /// @zod.custom(imports.emailSchema)
@@ -292,35 +292,35 @@ model User {
   password            UserPassword?
   bio                 String?
   avatarUrl           String?
-  timeZone            String             @default("Europe/London")
+  timeZone            String               @default("Europe/London")
   travelSchedules     TravelSchedule[]
-  weekStart           String             @default("Sunday")
+  weekStart           String               @default("Sunday")
   // DEPRECATED - TO BE REMOVED
-  startTime           Int                @default(0)
-  endTime             Int                @default(1440)
+  startTime           Int                  @default(0)
+  endTime             Int                  @default(1440)
   // </DEPRECATED>
-  bufferTime          Int                @default(0)
-  hideBranding        Boolean            @default(false)
+  bufferTime          Int                  @default(0)
+  hideBranding        Boolean              @default(false)
   // TODO: should be renamed since it only affects the booking page
   theme               String?
   appTheme            String?
-  createdDate         DateTime           @default(now()) @map(name: "created")
+  createdDate         DateTime             @default(now()) @map(name: "created")
   trialEndsAt         DateTime?
   lastActiveAt        DateTime?
-  eventTypes          EventType[]        @relation("user_eventtype")
+  eventTypes          EventType[]          @relation("user_eventtype")
   credentials         Credential[]
   teams               Membership[]
   bookings            Booking[]
   schedules           Schedule[]
   defaultScheduleId   Int?
   selectedCalendars   SelectedCalendar[]
-  completedOnboarding Boolean            @default(false)
+  completedOnboarding Boolean              @default(false)
   locale              String?
-  timeFormat          Int?               @default(12)
+  timeFormat          Int?                 @default(12)
   twoFactorSecret     String?
-  twoFactorEnabled    Boolean            @default(false)
+  twoFactorEnabled    Boolean              @default(false)
   backupCodes         String?
-  identityProvider    IdentityProvider   @default(CAL)
+  identityProvider    IdentityProvider     @default(CAL)
   identityProviderId  String?
   availability        Availability[]
   invitedTo           Int?
@@ -330,7 +330,7 @@ model User {
 
   // Inverse Relation to ApplicationUserMapping model
   applicationUserMappings ApplicationUserMapping[]
-
+  
   // the location where the events will end up
   destinationCalendar DestinationCalendar?
   // participate in dynamic group booking or not
@@ -397,6 +397,7 @@ model User {
   filterSegments                 FilterSegment[]
   creditBalance                  CreditBalance?
   whitelistWorkflows             Boolean                      @default(false)
+  
 
   @@unique([email])
   @@unique([email, username])
@@ -2309,41 +2310,30 @@ model RolePermission {
   @@index([action])
 }
 
+
+
 // ------------------------------------------------------- custom models -------------------------------------------------------//
-
-// Model to store applications authorized to use the system-level APIs
-model AuthorizedApplication {
-  id            Int      @id @default(autoincrement())
-  applicationId String   @unique // e.g., "realtor_app_v1", "chess_app_v1"
-  appName       String // e.g., "Realtor Scheduling App"
-  apiKeyHash    String // A bcrypt hash of the application's unique API key
-  isActive      Boolean  @default(true) // To easily enable/disable an application's access
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-
-  @@index([applicationId])
-}
 
 // Model to map an external User ID (from any identity provider)
 // and an Application ID to a specific Cal.com User profile.
 // This enables a single person to have different Cal.com profiles
 // for different applications they use within your ecosystem.
 model ApplicationUserMapping {
-  id                   Int    @id @default(autoincrement())
-  externalUserId       String // Stores the User ID from the external identity provider (e.g., Supabase User ID, Auth0 User ID)
-  identityProviderName String // Name of the identity provider (e.g., "supabase_auth", "auth0_custom", "legacy_system_xyz")
-  applicationId        String // Identifier for your specific application (e.g., "realtor_app_v1", "chess_app_v1")
+  id                    Int     @id @default(autoincrement())
+  externalUserId        String  // Stores the User ID from the external identity provider (e.g., Supabase User ID, Auth0 User ID)
+  identityProviderName  String  // Name of the identity provider (e.g., "supabase_auth", "auth0_custom", "legacy_system_xyz")
+  applicationId         String  // Identifier for your specific application (e.g., "realtor_app_v1", "chess_app_v1")
 
-  calComUserId Int @unique // Foreign key to Cal.com's User model's ID.
-  // @unique ensures one Cal.com profile is only used for one specific mapping.
+  calComUserId          Int     @unique // Foreign key to Cal.com's User model's ID.
+                                  // @unique ensures one Cal.com profile is only used for one specific mapping.
 
   // Relation to Cal.com's User model
   // Assumes Cal.com's main user model is named 'User' and its primary key is 'id'.
   // Adjust 'User' and 'id' if your Cal.com schema uses different names.
-  calComUser User @relation(fields: [calComUserId], references: [id], onDelete: Cascade)
+  calComUser            User    @relation(fields: [calComUserId], references: [id], onDelete: Cascade)
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
 
   // Ensures that for a given external user from a specific identity provider,
   // they can only have one Cal.com profile per application.

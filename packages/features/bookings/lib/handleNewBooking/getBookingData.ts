@@ -23,6 +23,10 @@ const _getBookingData = async <T extends z.ZodType>({
   eventType: getEventTypeResponse;
   schema: T;
 }) => {
+  console.log("[getBookingData] reqBody received:", JSON.stringify(reqBody, null, 2));
+  console.log("[getBookingData] reqBody.responses specifically:", JSON.stringify(reqBody.responses, null, 2));
+  // Also log eventType.bookingFields to understand the schema being built
+  console.log("[getBookingData] eventType.bookingFields:", JSON.stringify(eventType.bookingFields, null, 2));
   const parsedBody = await schema.parseAsync(reqBody);
   const parsedBodyWithEnd = (body: TgetBookingDataSchema): body is ReqBodyWithEnd => {
     // Use the event length to auto-set the event end time.

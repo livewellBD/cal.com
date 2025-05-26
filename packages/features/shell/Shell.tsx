@@ -1,7 +1,8 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import { usePathname, useRouter } from "next/navigation";
+// --- FOR IFRAME/MODULARIZATION/MICRO-SERVICE: ADDED useSearchParams ---
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import type { Dispatch, ReactElement, ReactNode, SetStateAction } from "react";
 import React, { cloneElement } from "react";
 import { Toaster } from "sonner";
@@ -29,6 +30,10 @@ const Layout = (props: LayoutProps) => {
   const pathname = usePathname();
   const isFullPageWithoutSidebar = pathname?.startsWith("/apps/routing-forms/reporting/");
 
+  // --- FOR IFRAME/MODULARIZATION/MICRO-SERVICE: ADDED THESE 2 LINES ---
+  const searchParams = useSearchParams();
+  const isEmbedView = searchParams.get("embed") === "true";
+
   useFormbricks();
 
   return (
@@ -40,18 +45,22 @@ const Layout = (props: LayoutProps) => {
       <TimezoneChangeDialog />
 
       <div className="flex min-h-screen flex-col">
-        {banners && !props.isPlatformUser && !isFullPageWithoutSidebar && (
-          <BannerContainer banners={banners} />
-        )}
-
-        <div className="flex flex-1" data-testid="dashboard-shell">
-          {props.SidebarContainer ? (
-            cloneElement(props.SidebarContainer, { bannersHeight })
-          ) : (
-            <SideBarContainer isPlatformUser={props.isPlatformUser} bannersHeight={bannersHeight} />
-          )}
+        {banners &&
+          !props.isPlatformUser &&
+          !isFullPageWithoutSidebar &&
+          // FOR IFRAME/MODULARIZATION/MICRO-SERVICE: ADDED isEmbedView
+          !isEmbedView && <BannerContainer banners={banners} />}
+        {/* --- FOR IFRAME/MODULARIZATION/MICRO-SERVICE: ADDED isEmbedView ? "w-full" to make the main content area take up the full width in embed mode "" ---*/}
+        <div className={classNames("flex flex-1", isEmbedView ? "w-full" : "")} data-testid="dashboard-shell">
+          {!isEmbedView && // FOR IFRAME/MODULARIZATION/MICRO-SERVICE: ADDED isEmbedView to conditionally render the sidebar
+            (props.SidebarContainer ? (
+              cloneElement(props.SidebarContainer, { bannersHeight })
+            ) : (
+              <SideBarContainer isPlatformUser={props.isPlatformUser} bannersHeight={bannersHeight} />
+            ))}
           <div className="flex w-0 flex-1 flex-col">
-            <MainContainer {...props} />
+            {/* --- FOR IFRAME/MODULARIZATION/MICRO-SERVICE: PASSES IN isEmbedView PROP ---*/}
+            <MainContainer {...props} isEmbedView={isEmbedView} />
           </div>
         </div>
       </div>
@@ -87,6 +96,8 @@ export type LayoutProps = {
   afterHeading?: ReactNode;
   smallHeading?: boolean;
   isPlatformUser?: boolean;
+  // --- FOR IFRAME/MODULARIZATION/MICRO-SERVICE: ADDED isEmbedView ---
+  isEmbedView?: boolean;
 };
 
 const KBarWrapper = ({ children, withKBar = false }: { withKBar: boolean; children: React.ReactNode }) =>
@@ -201,18 +212,21 @@ function MainContainer({
     <MobileNavigationContainer isPlatformNavigation={isPlatformUser} />
   ),
   TopNavContainer: TopNavContainerProp = <TopNavContainer />,
+  isEmbedView, // --- FOR IFRAME/MODULARIZATION/MICRO-SERVICE: ADDED isEmbedView
   ...props
 }: LayoutProps) {
   return (
     <main className="bg-default relative z-0 flex-1 pb-8 focus:outline-none">
       {/* show top navigation for md and smaller (tablet and phones) */}
-      {TopNavContainerProp}
+      {!isEmbedView && TopNavContainerProp}{" "}
+      {/* FOR IFRAME/MODULARIZATION/MICRO-SERVICE: ADDED isEmbedView conditionally render the TopNav */}
       <div className="max-w-full p-2 sm:py-4 lg:px-6">
         <ErrorBoundary>
           {!props.withoutMain ? <ShellMain {...props}>{props.children}</ShellMain> : props.children}
         </ErrorBoundary>
         {/* show bottom navigation for md and smaller (tablet and phones) on pages where back button doesn't exist */}
-        {!props.backPath ? MobileNavigationContainerProp : null}
+        {!props.backPath && !isEmbedView ? MobileNavigationContainerProp : null}{" "}
+        {/* FOR IFRAME/MODULARIZATION/MICRO-SERVICE: ADDED isEmbedView to conditionally render the MobileNav */}
       </div>
     </main>
   );

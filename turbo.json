@@ -60,7 +60,10 @@
         "NEXT_PUBLIC_API_HITPAY_SANDBOX",
         "SUPABASE_JWT_SECRET",
         "NEXT_PUBLIC_SUPABASE_URL",
-        "NEXT_PUBLIC_SUPABASE_ANON_KEY"
+        "NEXT_PUBLIC_SUPABASE_ANON_KEY",
+        "CUSTOM_BOOKING_API_KEY",
+        "INTERNAL_PROVISIONING_API_KEY",
+        "CALCOM_V2_API_KEY"
       ]
     },
     "@calcom/web#dx": {
